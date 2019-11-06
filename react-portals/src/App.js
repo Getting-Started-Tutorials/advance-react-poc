@@ -1,24 +1,17 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import CounterWithPortal from './Components'
+
+/**
+ * Generally, React renders the component as a child to the parent in which it is used. 
+ * Whereas, portals in react gives developer an advantage to add a component outside the current DOM hierarchy by maintaining the event bubbling and state management.
+ */
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h2>React Protals 👋</h2>
+      <CounterWithPortal></CounterWithPortal>
     </div>
   );
 }
