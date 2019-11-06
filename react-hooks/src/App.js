@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Input } from 'antd';
 import { Button } from 'antd';
 import 'antd/es/button/style/index.css';
@@ -22,18 +22,26 @@ const App = () => {
     "What's Forrest Gump's password?",
     'Where do programmers like to hangout? The Foo Bar'
   ];
+  const INITIAL_GAME_STATE = { victory: false, startTime: null, endTime: null };
+  const [gameState, setGameState] = useState(INITIAL_GAME_STATE);
   const [snippet, setSnippet] = useState('Lazy! select snippet!');
   const [userText, setUserText] = useState('');
 
   const updateUserText = event => {
     setUserText(event.target.value);
-    console.log(userText);
+    if (event.target.value == snippet) {
+      setGameState({ ...gameState, victory: true, endTime: new Date().getTime() - gameState.startTime });
+    }
   }
 
   const chooseSnippet = snippetIndex => () => {
-    console.log('setSnippet', snippetIndex);
     setSnippet(SNIPPETS[snippetIndex]);
+    setGameState({ ...gameState, startTime: new Date().getTime() })
   };
+
+  useEffect(() => {
+    if (gameState.victory) document.title = 'Victory!';
+  });
 
   return (
     <div className="container">
@@ -47,6 +55,7 @@ const App = () => {
           </Button>
         ))
       }
+      <p>{gameState.victory ? `Congrats 🎉, You did it at ${gameState.endTime}` : ''}</p>
     </div>
   )
 }
